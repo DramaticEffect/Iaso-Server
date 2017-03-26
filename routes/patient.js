@@ -54,7 +54,7 @@ exports.setRecordsByPatientId = async (ctx) => {
     },
   } = ctx;
 
-  const patient = Patient.findById(id);
+  const patient = await Patient.findById(id);
 
   patient.firstName = firstName;
   patient.lastName = lastName;
