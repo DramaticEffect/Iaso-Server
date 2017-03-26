@@ -1,10 +1,11 @@
 const Koa = require('koa');
 const Router = require('koa-router');
+const koaCors = require('koa-cors');
 
 const koaBody = require('koa-body');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://mongo:27017');
+mongoose.connect('mongodb://0.0.0.0:27017/iaso');
 mongoose.Promise = Promise;
 
 const patientRoutes = require('./routes/patient');
@@ -22,6 +23,7 @@ router.post('/patients', patientRoutes.addPatient);
 router.patch('/patients/:id/records', patientRoutes.setRecordsByPatientId);
 
 app.use(koaBody());
+app.use(koaCors());
 app.use(router.routes());
 
 // eslint-disable-next-line no-console
