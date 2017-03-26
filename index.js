@@ -25,7 +25,9 @@ router.get('/patients/:id/records', patientRoutes.getRecordsByPatientId);
 router.post('/patients', patientRoutes.addPatient);
 router.patch('/patients/:id/records', patientRoutes.setRecordsByPatientId);
 
-app.use(corsMiddleware());
+app.use(corsMiddleware({
+  methods: ['GET', 'PUT', 'POST', 'PATCH'],
+}));
 app.use(blockchainSyncMiddleware());
 app.use(koaBody());
 app.use(router.routes());
