@@ -1,10 +1,14 @@
 const Koa = require('koa');
+const corsMiddleware = require('koa-cors');
 const Router = require('koa-router');
-
 const koaBody = require('koa-body');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://mongo:27017');
+const blockchainSyncMiddleware = require('./lib/middleware/blockchainSync');
+
+const mongoHost = process.env.IASO_MONGO_HOST || 'mongo';
+
+mongoose.connect(`mongodb://${mongoHost}:27017`);
 mongoose.Promise = Promise;
 
 const patientRoutes = require('./routes/patient');
@@ -21,6 +25,8 @@ router.get('/patients/:id/records', patientRoutes.getRecordsByPatientId);
 router.post('/patients', patientRoutes.addPatient);
 router.patch('/patients/:id/records', patientRoutes.setRecordsByPatientId);
 
+app.use(corsMiddleware());
+app.use(blockchainSyncMiddleware());
 app.use(koaBody());
 app.use(router.routes());
 

@@ -1,10 +1,11 @@
 FROM node:7
 
-RUN mkdir /app
-
 VOLUME /app
-
 WORKDIR /app
+ADD package.json /app
+
+RUN npm config set python python2.7
+RUN npm install
 
 EXPOSE 3000
 
