@@ -23,11 +23,9 @@ router.get('/patients/:id/records', patientRoutes.getRecordsByPatientId);
 
 // Mutators
 router.post('/patients', patientRoutes.addPatient);
-router.patch('/patients/:id/records', patientRoutes.setRecordsByPatientId);
+router.post('/patients/:id/records', patientRoutes.setRecordsByPatientId);
 
-app.use(corsMiddleware({
-  methods: ['GET', 'PUT', 'POST', 'PATCH'],
-}));
+app.use(corsMiddleware());
 app.use(blockchainSyncMiddleware());
 app.use(koaBody());
 app.use(router.routes());
